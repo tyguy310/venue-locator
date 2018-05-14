@@ -1,8 +1,28 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import WebFont from 'webfontloader';
+// import { Provider } from 'react-redux';
+// import { ConnectedRouter } from 'react-router-redux';
+// import createHistory from 'history/createBrowserHistory';
+import './global-styles';
+import App from './containers/App/';
 import registerServiceWorker from './registerServiceWorker';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+// const initialState = {};
+// const history = createHistory();
+// const store = configureStore(initialState, history);
+// const MOUNT_NODE = document.getElementById('root');
+WebFont.load({
+  google: {
+    families: ['Nunito', 'Fontdiner Swanky', 'sans-serif']
+  }
+});
+ReactDOM.render(
+  // <Provider store={store}>
+  //   <ConnectedRouter history={history}>
+  <App />,
+  document.getElementById('root')
+  //   </ConnectedRouter>
+  // </Provider>, MOUNT_NODE
+);
 registerServiceWorker();

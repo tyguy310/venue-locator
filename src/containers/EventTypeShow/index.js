@@ -14,6 +14,61 @@ const H1 = styled.h1`
 `;
 
 export default class EventTypeShow extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      coords: {
+        lat: null,
+        lng: null
+      }
+    };
+  }
+
+  loadPosition = async () => {
+    try {
+      const position = await this.geoCoords();
+      const { latitude, longitude } = position.coords;
+      this.setState({
+        coords: {
+          lat: latitude,
+          lng: longitude
+        }
+      });
+      console.log('ETS: ', this.state.coords);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  getIPLocation() {
+    fetch('http://ip-api.com/json')
+      .then(response => response.json())
+      .then(data => {
+        const { latitude, longitude } = data.coords;
+        this.setState({
+          coords: {
+            lat: latitude,
+            lng: longitude
+          }
+        });
+      })
+      .catch(err => console.error(err));
+  }
+
+  geoCoords() {
+    return new Promise((resolve, reject) => {
+      navigator.geolocation.getCurrentPosition(resolve, reject);
+    });
+  }
+
+  componentDidMount() {
+    if ('geolocation' in navigator) {
+      this.loadPosition();
+    } else {
+      this.getIPLocation();
+    }
+  }
+
   render() {
     const { eventtype } = this.props.match.params;
     // const { coords: { latitude, longitude } } = this.props.location;
@@ -23,12 +78,8 @@ export default class EventTypeShow extends React.Component {
           <title>{eventtype}</title>
           <meta name="description" content="Description of EventTypeShow" />
         </Helmet>
-        <H1>
-          {eventtype}
-          {/* <div>Coords: {this.props.userlocation}</div> */}
-          {/* <div>{longitude}</div> */}
-        </H1>
-        <MapContainer />
+        <H1>{eventtype}</H1>
+        <MapContainer coords={this.state.coords} />
       </div>
     );
   }

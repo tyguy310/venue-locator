@@ -45,7 +45,6 @@ export class MapContainer extends Component {
       marginLeft: 'auto',
       marginRight: 'auto'
     };
-    console.log('props', this.props.coords);
 
     return (
       <Map

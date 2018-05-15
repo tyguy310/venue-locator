@@ -34,9 +34,8 @@ export default class EventTypeShow extends React.Component {
           lng: longitude
         }
       });
-      console.log('ETS: ', this.state.coords);
     } catch (error) {
-      console.log(error);
+      this.getIPLocation();
     }
   };
 
@@ -44,11 +43,11 @@ export default class EventTypeShow extends React.Component {
     fetch('http://ip-api.com/json')
       .then(response => response.json())
       .then(data => {
-        const { latitude, longitude } = data.coords;
+        const { lat, lon } = data;
         this.setState({
           coords: {
-            lat: latitude,
-            lng: longitude
+            lat: lat,
+            lng: lon
           }
         });
       })

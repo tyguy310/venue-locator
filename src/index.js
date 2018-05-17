@@ -8,10 +8,11 @@ import './global-styles';
 import App from './containers/App/';
 import registerServiceWorker from './registerServiceWorker';
 
+// import configureStore from './configureStore';
 // const initialState = {};
 // const history = createHistory();
 // const store = configureStore(initialState, history);
-// const MOUNT_NODE = document.getElementById('root');
+const MOUNT_NODE = document.getElementById('root');
 WebFont.load({
   google: {
     families: ['Nunito', 'Fontdiner Swanky', 'sans-serif']
@@ -19,10 +20,10 @@ WebFont.load({
 });
 ReactDOM.render(
   // <Provider store={store}>
-  //   <ConnectedRouter history={history}>
+  // <ConnectedRouter history={history}>
   <App />,
-  document.getElementById('root')
-  //   </ConnectedRouter>
-  // </Provider>, MOUNT_NODE
+  // </ConnectedRouter>
+  // </Provider>
+  MOUNT_NODE
 );
 registerServiceWorker();

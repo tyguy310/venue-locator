@@ -58,9 +58,9 @@ export class MapContainer extends Component {
       >
         <Marker
           onClick={this.onMarkerClick}
-          title={'Changing Colors Garage'}
+          title={'Here'}
           position={this.props.coords}
-          name={'Changing Colors Garage'}
+          name={'Home'}
         />
         <InfoWindow
           marker={this.state.activeMarker}

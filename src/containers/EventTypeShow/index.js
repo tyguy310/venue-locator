@@ -18,8 +18,12 @@ export default class EventTypeShow extends React.Component {
     super(props);
     this.state = {
       coords: {
-        lat: null,
-        lng: null
+        lat: localStorage.getItem('latitude')
+          ? localStorage.getItem('latitude')
+          : null,
+        lng: localStorage.getItem('longitude')
+          ? localStorage.getItem('longitude')
+          : null
       }
     };
   }
@@ -28,6 +32,8 @@ export default class EventTypeShow extends React.Component {
     try {
       const position = await this.geoCoords();
       const { latitude, longitude } = position.coords;
+      localStorage.setItem('latitude', latitude);
+      localStorage.setItem('longitude', longitude);
       this.setState({
         coords: {
           lat: latitude,
@@ -40,16 +46,19 @@ export default class EventTypeShow extends React.Component {
   };
 
   getIPLocation() {
-    fetch('http://ip-api.com/json')
+    fetch('https://ipapi.co/json')
       .then(response => response.json())
       .then(data => {
-        const { lat, lon } = data;
+        const { latitude, longitude } = data;
         this.setState({
           coords: {
-            lat: lat,
-            lng: lon
+            lat: latitude,
+            lng: longitude
           }
         });
+
+        localStorage.setItem('latitude', latitude);
+        localStorage.setItem('longitude', longitude);
       })
       .catch(err => console.error(err));
   }
@@ -61,16 +70,16 @@ export default class EventTypeShow extends React.Component {
   }
 
   componentDidMount() {
+    this.getIPLocation();
+
     if ('geolocation' in navigator) {
       this.loadPosition();
-    } else {
-      this.getIPLocation();
     }
   }
 
   render() {
     const { eventtype } = this.props.match.params;
-    // const { coords: { latitude, longitude } } = this.props.location;
+
     return (
       <div style={{ position: 'relative' }}>
         <Helmet>
@@ -78,7 +87,10 @@ export default class EventTypeShow extends React.Component {
           <meta name="description" content="Description of EventTypeShow" />
         </Helmet>
         <H1>{eventtype}</H1>
-        <MapContainer coords={this.state.coords} />
+        <MapContainer
+          initCoords={this.state.coords}
+          coords={this.state.coords}
+        />
       </div>
     );
   }

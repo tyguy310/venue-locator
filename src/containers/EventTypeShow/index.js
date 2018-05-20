@@ -1,7 +1,9 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 import styled from 'styled-components';
+
 import MapContainer from '../../components/MapContainer';
+import VenueInfoWindow from '../../components/VenueInfoWindow';
 
 const H1 = styled.h1`
   display: flex;
@@ -24,9 +26,32 @@ export default class EventTypeShow extends React.Component {
         lng: localStorage.getItem('longitude')
           ? localStorage.getItem('longitude')
           : null
-      }
+      },
+      activeMarker: {},
+      selectedPlace: {},
+      showingInfoWindow: false
     };
+    this.handleMarkerChange = this.handleMarkerChange.bind(this);
+    this.handleMapClick = this.handleMapClick.bind(this);
   }
+
+  handleMarkerChange = (props, marker) => {
+    this.setState({
+      selectedPlace: props,
+      activeMarker: marker,
+      showingInfoWindow: true
+    });
+  };
+
+  handleMapClick = () => {
+    if (this.state.showingInfoWindow) {
+      this.setState({
+        showingInfoWindow: false,
+        activeMarker: null,
+        selectedPlace: null
+      });
+    }
+  };
 
   loadPosition = async () => {
     try {
@@ -90,7 +115,10 @@ export default class EventTypeShow extends React.Component {
         <MapContainer
           initCoords={this.state.coords}
           coords={this.state.coords}
+          onMarkerChange={this.handleMarkerChange}
+          onMapClick={this.handleMapClick}
         />
+        <VenueInfoWindow venueInfo={this.state.selectedPlace} />
       </div>
     );
   }

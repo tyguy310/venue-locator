@@ -6,37 +6,48 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
+import { Map, Marker, GoogleApiWrapper } from 'google-maps-react';
+// import _ from 'lodash';
 
 export class MapContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showingInfoWindow: false,
-      activeMarker: {},
-      selectedPlace: {}
+      // showingInfoWindow: false,
     };
     // binding this to event-handler functions
-    this.onMarkerClick = this.onMarkerClick.bind(this);
-    this.onMapClick = this.onMapClick.bind(this);
+    this.markerClick = this.markerClick.bind(this);
+    this.mapClick = this.mapClick.bind(this);
   }
 
-  onMarkerClick = (props, marker) => {
-    this.setState({
-      selectedPlace: props,
-      activeMarker: marker,
-      showingInfoWindow: true
-    });
-  };
+  markerClick(props, marker) {
+    this.props.onMarkerChange(props, marker);
+  }
 
-  onMapClick = () => {
-    if (this.state.showingInfoWindow) {
-      this.setState({
-        showingInfoWindow: false,
-        activeMarker: null
-      });
+  mapClick() {
+    this.props.onMapClick();
+  }
+
+  venuesArray = [
+    {
+      coords: {
+        lat: 41.921875,
+        lng: -87.659384
+      },
+      name: 'Derby Bar & Grill',
+      markerLabel: 'HH',
+      type: 'Happy Hour'
+    },
+    {
+      coords: {
+        lat: 41.923126,
+        lng: -87.645305
+      },
+      name: 'Lion Head Pub',
+      markerLabel: 'HH',
+      type: 'Happy Hour'
     }
-  };
+  ];
 
   render() {
     const style = {
@@ -52,21 +63,22 @@ export class MapContainer extends Component {
         xs={12}
         style={style}
         google={this.props.google}
-        onClick={this.onMapClick}
+        onClick={this.mapClick}
         zoom={14}
         initialCenter={this.props.initCoords}
         center={this.props.coords}
       >
-        <Marker
-          onClick={this.onMarkerClick}
-          title={'Here'}
-          position={this.props.coords}
-          name={'Home'}
-        />
-        <InfoWindow
-          marker={this.state.activeMarker}
-          visible={this.state.showingInfoWindow}
-        />
+        <Marker title={'I am here'} position={this.props.coords} />
+
+        {this.venuesArray.map(venue => (
+          <Marker
+            position={venue.coords}
+            onClick={this.markerClick}
+            title={venue.name}
+            key={venue.name}
+            label={venue.markerLabel}
+          />
+        ))}
       </Map>
     );
   }

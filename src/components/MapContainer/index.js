@@ -5,7 +5,6 @@
  */
 
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { Map, Marker, GoogleApiWrapper } from 'google-maps-react';
 // import _ from 'lodash';
 
@@ -83,10 +82,6 @@ export class MapContainer extends Component {
     );
   }
 }
-
-MapContainer.propTypes = {
-  google: PropTypes.element
-};
 
 export default GoogleApiWrapper({
   apiKey: 'AIzaSyDowSMxTsqXVrzWpKk1IfsADisPQ8Pf_Xk'

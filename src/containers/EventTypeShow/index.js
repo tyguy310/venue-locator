@@ -1,19 +1,9 @@
 import React from 'react';
 import Helmet from 'react-helmet';
-import styled from 'styled-components';
 
+import { H1, StyledLink } from './styles';
 import MapContainer from '../../components/MapContainer';
 import VenueInfoWindow from '../../components/VenueInfoWindow';
-
-const H1 = styled.h1`
-  display: flex;
-  margin: 0;
-  justify-content: center;
-  background-color: #520e6f;
-  color: #bb8600;
-  padding: 1rem;
-  font-family: 'Fontdiner swanky', cursive;
-`;
 
 export default class EventTypeShow extends React.Component {
   constructor(props) {
@@ -111,6 +101,7 @@ export default class EventTypeShow extends React.Component {
           <title>{eventtype}</title>
           <meta name="description" content="Description of EventTypeShow" />
         </Helmet>
+        <StyledLink to="/">Back</StyledLink>
         <H1>{eventtype}</H1>
         <MapContainer
           initCoords={this.state.coords}

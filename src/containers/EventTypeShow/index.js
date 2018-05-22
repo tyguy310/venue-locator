@@ -4,8 +4,9 @@ import Helmet from 'react-helmet';
 import { H1, StyledLink } from './styles';
 import MapContainer from '../../components/MapContainer';
 import VenueInfoWindow from '../../components/VenueInfoWindow';
+import venuesArray from './venuesDataMock';
 
-export default class EventTypeShow extends React.Component {
+class EventTypeShow extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -108,9 +109,12 @@ export default class EventTypeShow extends React.Component {
           coords={this.state.coords}
           onMarkerChange={this.handleMarkerChange}
           onMapClick={this.handleMapClick}
+          venuesArray={venuesArray}
         />
         <VenueInfoWindow venueInfo={this.state.selectedPlace} />
       </div>
     );
   }
 }
+
+export default EventTypeShow;

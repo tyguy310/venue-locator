@@ -27,27 +27,6 @@ export class MapContainer extends Component {
     this.props.onMapClick();
   }
 
-  venuesArray = [
-    {
-      coords: {
-        lat: 41.921875,
-        lng: -87.659384
-      },
-      name: 'Derby Bar & Grill',
-      markerLabel: 'HH',
-      type: 'Happy Hour'
-    },
-    {
-      coords: {
-        lat: 41.923126,
-        lng: -87.645305
-      },
-      name: 'Lion Head Pub',
-      markerLabel: 'HH',
-      type: 'Happy Hour'
-    }
-  ];
-
   render() {
     const style = {
       width: '100%',
@@ -69,7 +48,7 @@ export class MapContainer extends Component {
       >
         <Marker title={'I am here'} position={this.props.coords} />
 
-        {this.venuesArray.map(venue => (
+        {this.props.venuesArray.map(venue => (
           <Marker
             position={venue.coords}
             onClick={this.markerClick}

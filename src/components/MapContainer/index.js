@@ -6,14 +6,11 @@
 
 import React, { Component } from 'react';
 import { Map, Marker, GoogleApiWrapper } from 'google-maps-react';
-// import _ from 'lodash';
 
 export class MapContainer extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      // showingInfoWindow: false,
-    };
+    this.state = {};
     // binding this to event-handler functions
     this.markerClick = this.markerClick.bind(this);
     this.mapClick = this.mapClick.bind(this);

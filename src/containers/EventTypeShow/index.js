@@ -1,10 +1,10 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 
-import { H1, StyledLink } from './styles';
 import MapContainer from '../../components/MapContainer';
 import VenueInfoWindow from '../../components/VenueInfoWindow';
 import venuesArray from './venuesDataMock';
+import Header from '../../components/Header';
 
 class EventTypeShow extends React.Component {
   constructor(props) {
@@ -85,7 +85,8 @@ class EventTypeShow extends React.Component {
     });
   }
 
-  componentDidMount() {
+  // This is bad and causes a memory leak; can result in trying to setState after component unmounts. FIX!!!
+  componentWillMount() {
     this.getIPLocation();
 
     if ('geolocation' in navigator) {
@@ -97,13 +98,18 @@ class EventTypeShow extends React.Component {
     const { eventtype } = this.props.match.params;
 
     return (
-      <div style={{ position: 'relative' }}>
+      <div>
         <Helmet>
           <title>{eventtype}</title>
           <meta name="description" content="Description of EventTypeShow" />
         </Helmet>
-        <StyledLink to="/">Back</StyledLink>
-        <H1>{eventtype}</H1>
+        <Header
+          leftPath={''}
+          btnLeftText={'Back'}
+          headerText={eventtype}
+          btnRightText={'Add Happy'}
+          rightPath={'AddHappy'}
+        />
         <MapContainer
           initCoords={this.state.coords}
           coords={this.state.coords}

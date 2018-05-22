@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 
 const StyledLink = styled(Link)`
   text-decoration: none;
-  width: calc(50% - 6rem);
+  width: calc(50% - 3rem);
   border: 2px solid #520e6f;
-  margin: 2rem;
+  margin: 1rem;
   border-radius: 4px;
   color: #fff;
   background-color: rgba(82, 14, 111, 0.3);
@@ -13,9 +13,10 @@ const StyledLink = styled(Link)`
   text-transform: uppercase;
   display: flex;
   height: 30vh;
+  text-align: center;
   justify-content: center;
   align-items: center;
-  font-size: 2rem;
+  font-size: 1.5em;
   font-family: 'Fontdiner swanky', cursive;
 
   &:hover {
